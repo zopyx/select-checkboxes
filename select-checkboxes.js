@@ -7,19 +7,22 @@
                     // related label (referred through its 'for' attribute
                     var label = $('*[for="' + id + '"]');
                     if (label.length == 0) { 
-                        alert('<select> with ID "' + id + '" has no associated label');
+                        alert(sprintf('<select> with ID "%s" has no associated label', id));
                         return;
                     }
                     var label_text = $(label).html();
 
                     // added checkboxes
-                    $(this).after('<div class="select-checkbox" data-id="' + id + '">');
-                    var div = $('.select-checkbox[data-id="' + id + '"');
+                    var html = [];
+                    html.push(sprintf('<div class="select-checkbox" data-id="%s">', id));
                     $(this).children('option').each(function() {
-                        div.append('<div><input class="select-checkbox" type="checkbox" value="' +  $(this).attr('value') + '"/>' + $(this).html() + '</div>') ;
+                        html.push('<div>');
+                        html.push(sprintf('<input class="select-checkbox" type="checkbox" value="%s"/>', $(this).attr('value')));
+                        html.push($(this).html());
+                        html.push('</div>');
                     });
-                    $(this).after('</div>');
-                    $(this).after('<div class="toggle-select-checkbox" data-id="'  + id + '">' + label.html() + '</div>');
+                    html.push('</div>');
+                    $(this).after(sprintf('<div class="select-checkbox-container"><div class="toggle-select-checkbox" data-id="%s">%s</div> %s</div></div>', id, label.html(), html.join('')));
 
                     // hide <select> and related label element                    
                     $(this).hide();
