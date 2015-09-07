@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.js"></script>
+        <style type="text/css">
+            div.select-checkbox {
+                display: none;
+                max-height: 150px;
+                overflow: auto;
+                max-width: 150px;
+            }
+        </style>
+    </head>
+    <body>
+        <label for="test">Optionen Test 1</label>
+        <select name="test" id="test" multiple="multiple">
+            <option value="option1">option 1</option1>
+            <option value="option2">option 2</option1>
+            <option value="option3">option 3</option1>
+            <option value="option4">option 4</option1>
+            <option value="option5">option 5</option1>
+        </select>
+
+        <label for="foo">Optionen Test 1</label>
+        <select name="foo" id="foo" multiple="multiple">
+            <option value="optiona">option a</option1>
+            <option value="optionb">option b</option1>
+            <option value="optionc">option c</option1>
+            <option value="optiond">option d</option1>
+            <option value="optione">option e</option1>
+        </select>
+        
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('select[multiple="multiple"]').each(function() {
+                    var id = $(this).attr('id');
+                    $(this).after('<div class="select-checkbox" data-id="' + id + '">');
+                    var div = $('.select-checkbox[data-id="' + id + '"');
+                    $(this).children('option').each(function() {
+                        div.append('<div><input class="select-checkbox" type="checkbox" value="' +  $(this).attr('value') + '"/>' + $(this).html() + '</div>') ;
+                    });
+                    $(this).after('</div>');
+                    $(this).after('<a class="toggle-select-checkbox" data-id="'  + id + '">Toggle</a>');
+
+
+                    $(document).on('click', '.toggle-select-checkbox', function(event) {
+                        event.stopImmediatePropagation();
+                        var id = $(this).data('id');
+                        $('div.select-checkbox[data-id="' + id + '"]').toggle();
+                    });
+
+                    $(document).on('click', 'div.select-checkbox', function() {
+                        var selected_values = [];
+                        $(this).find('input[type="checkbox"]').each(function() {
+                            if ($(this).prop('checked')) {
+                                var value = $(this).val();
+                                selected_values.push(value);
+                            }
+                        });
+
+                        var select = $('#' + id);
+                        select.find('option:selected').prop('selected', false);
+                        select.find('option').each(function() {
+                            if (selected_values.indexOf($(this).val()) > -1) {
+                                $(this).prop('selected', true);
+                            }
+                        });
+
+                    });
+                });
+
+            });
+        </script>
+
+
+    </body>
+</html>
