@@ -15,7 +15,26 @@ div.select-checkbox {
 
 .toggle-select-checkbox {
     display: block;
+    pointer: cursor;
 }
+
+.toggle-select-checkbox:hover {
+    border-bottom: 1px solid #ddd;
+}
+
+
+.toggle-select-checkbox.checkboxes-invisible:before {
+    content: '\2192';    
+}
+
+.toggle-select-checkbox.checkboxes-visible:before {
+    content: '\2193';    
+}
+
+.toggle-select-checkbox.checkboxes-visible {
+    font-weight: bold;
+}
+
 
 div.select-checkbox.checkboxes-shown {
     display: inline-block;

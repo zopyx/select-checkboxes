@@ -27,7 +27,7 @@
             html.push('</div>');
         });
         html.push('</div>');
-        $(element).after(sprintf('<div class="select-checkbox-container"><div class="toggle-select-checkbox" data-id="%s">%s</div> %s</div></div>', id, label.html(), html.join('')));
+        $(element).after(sprintf('<div class="select-checkbox-container"><div class="toggle-select-checkbox checkboxes-invisible" data-id="%s">%s</div> %s</div></div>', id, label.html(), html.join('')));
 
         // hide <select> and related label element                    
         $(element).hide();
@@ -37,7 +37,15 @@
         $(document).on('click', '.toggle-select-checkbox', function(event) {
             event.stopImmediatePropagation();
             var id = $(this).data('id');
-            $('div.select-checkbox[data-id="' + id + '"]').toggleClass('checkboxes-shown');
+            var target = $('div.select-checkbox[data-id="' + id + '"]');
+            target.toggleClass('checkboxes-shown');
+            if (target.is(':visible')) {
+                $(this).addClass('checkboxes-visible');
+                $(this).removeClass('checkboxes-invisible');
+                } else {
+                $(this).removeClass('checkboxes-visible');
+                $(this).addClass('checkboxes-invisible');
+            }
         });
 
         // Handle for checkboxes
