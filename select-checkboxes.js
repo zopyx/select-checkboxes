@@ -1,6 +1,5 @@
 (function ($) {
 
-
     function do_modify(element) {
 
         // ID of <select>
