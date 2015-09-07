@@ -18,7 +18,11 @@
         html.push(sprintf('<div class="select-checkbox" data-id="%s">', id));
         $(element).children('option').each(function() {
             html.push('<div>');
-            html.push(sprintf('<input class="select-checkbox" type="checkbox" value="%s"/>', $(this).attr('value')));
+            if ($(this).is(':checked')) {
+                html.push(sprintf('<input class="select-checkbox" type="checkbox" value="%s" checked="checked">', $(this).attr('value')));
+            } else {
+                html.push(sprintf('<input class="select-checkbox" type="checkbox" value="%s">', $(this).attr('value')));
+            }
             html.push($(this).html());
             html.push('</div>');
         });
