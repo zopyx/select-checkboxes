@@ -5,6 +5,10 @@ div.select-checkbox {
     max-width: 250px;
 }
 
+.toggle-select-checkbox {
+    display: inline-block;
+}
+
 div.select-checkbox.checkboxes-shown {
     display: inline-block;
 }
