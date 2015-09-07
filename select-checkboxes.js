@@ -27,48 +27,60 @@
             html.push('</div>');
         });
         html.push('</div>');
-        $(element).after(sprintf('<div class="select-checkbox-container"><div class="toggle-select-checkbox checkboxes-invisible" data-id="%s">%s</div> %s</div></div>', id, label.html(), html.join('')));
+        $(element).after(sprintf('<div class="select-checkbox-container" data-id="%s"><div class="toggle-select-checkbox checkboxes-invisible" data-id="%s">%s<span class="checkbox-counter">0</span></div> %s</div></div>', id, id, label.html(), html.join('')));
 
         // hide <select> and related label element                    
         $(element).hide();
         label.hide();
+        update_counters(id);
+    }
 
-        // Toggler for div with checkboxes
-        $(document).on('click', '.toggle-select-checkbox', function(event) {
-            event.stopImmediatePropagation();
-            var id = $(this).data('id');
-            var target = $('div.select-checkbox[data-id="' + id + '"]');
-            target.toggleClass('checkboxes-shown');
-            if (target.is(':visible')) {
-                $(this).addClass('checkboxes-visible');
-                $(this).removeClass('checkboxes-invisible');
-                } else {
-                $(this).removeClass('checkboxes-visible');
-                $(this).addClass('checkboxes-invisible');
+    function update_counters(id) {
+        var element = $(sprintf('.select-checkbox-container[data-id="%s"]', id));
+        var checked_checkboxes = $(element).find('input[type="checkbox"]:checked');
+        $(sprintf('div.select-checkbox-container[data-id="%s"] .checkbox-counter', id)).html(checked_checkboxes.length);
+    }
+
+
+    // Toggler for div with checkboxes
+    $(document).on('click', '.toggle-select-checkbox', function(event) {
+        event.stopImmediatePropagation();
+        var id = $(this).data('id');
+        var target = $('div.select-checkbox[data-id="' + id + '"]');
+        target.toggleClass('checkboxes-shown');
+        if (target.is(':visible')) {
+            $(this).addClass('checkboxes-visible');
+            $(this).removeClass('checkboxes-invisible');
+            } else {
+            $(this).removeClass('checkboxes-visible');
+            $(this).addClass('checkboxes-invisible');
+        }
+    });
+
+    // Handle for checkboxes
+    $(document).on('click', 'div.select-checkbox', function() {
+
+        id = $(this).data('id');
+
+        var selected_values = [];
+        $(this).find('input[type="checkbox"]').each(function() {
+            if ($(this).prop('checked')) {
+                var value = $(this).val();
+                selected_values.push(value);
             }
         });
 
-        // Handle for checkboxes
-        $(document).on('click', 'div.select-checkbox', function() {
-            var selected_values = [];
-            $(this).find('input[type="checkbox"]').each(function() {
-                if ($(this).prop('checked')) {
-                    var value = $(this).val();
-                    selected_values.push(value);
-                }
-            });
+        update_counters(id);
 
-            var select = $('#' + id);
-            select.find('option:selected').prop('selected', false);
-            select.find('option').each(function() {
-                if (selected_values.indexOf($(this).val()) > -1) {
-                    $(this).prop('selected', true);
-                }
-            });
-
+        var select = $('#' + id);
+        select.find('option:selected').prop('selected', false);
+        select.find('option').each(function() {
+            if (selected_values.indexOf($(this).val()) > -1) {
+                $(this).prop('selected', true);
+            }
         });
-    }
 
+    });
 
     jQuery.fn.extend({
       selectCheckboxes: function() {

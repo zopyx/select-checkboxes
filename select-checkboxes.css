@@ -35,6 +35,14 @@ div.select-checkbox {
     font-weight: bold;
 }
 
+.checkbox-counter:before {
+    content: '(';
+    margin-left: 0.5em;
+}
+
+.checkbox-counter:after {
+    content: ')';
+}
 
 div.select-checkbox.checkboxes-shown {
     display: inline-block;
