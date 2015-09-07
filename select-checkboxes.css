@@ -1,0 +1,10 @@
+div.select-checkbox {
+    display: none;
+    overflow: auto;
+    max-height: 250px;
+    max-width: 250px;
+}
+
+div.select-checkbox.checkboxes-shown {
+    display: inline-block;
+}
