@@ -1,3 +1,5 @@
+
+
 div.select-checkbox {
     display: none;
     overflow: auto;
@@ -6,8 +8,13 @@ div.select-checkbox {
     min-width: 150px;
 }
 
-.toggle-select-checkbox {
+.select-checkbox-container {
     display: inline-block;
+    vertical-align: top;
+}
+
+.toggle-select-checkbox {
+    display: block;
 }
 
 div.select-checkbox.checkboxes-shown {
